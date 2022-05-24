@@ -1,3 +1,4 @@
+require('dotenv').config();
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -13,7 +14,13 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    ],
+    script: [
+      { 
+        src: 'https://kit.fontawesome.com/977f303f7f.js',
+        crossorigin: 'anonymous'
+      }
+    ],		
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -38,9 +45,32 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+		'@nuxtjs/style-resources',
+		[
+			'@nuxtjs/firebase',
+		 {	
+			 config: {
+        apiKey: process.env.API_KEY,
+        authDomain: process.env.AUTH_DOMAIN,
+				projectId: process.env.PROJECT_ID,
+				databaseURL: process.env.DATABASE_URL,
+        storageBucket: process.env.STORAGEBUCKET,
+        messagingSenderId: process.env.MESSAGINGSENDERID,
+        appId: process.env.APPID
+      },	 
+      services: {
+        firestore: true,
+        database: true,
+      }	
+		 }
+  	],		
   ],
-
+  styleResources: {
+    scss: [
+      '@/assets/scss/_variable.scss'
+    ]
+  },	
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
